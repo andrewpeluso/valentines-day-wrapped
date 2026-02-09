@@ -357,7 +357,20 @@
 
         /* Final Slide */
         .final-slide {
-            background: linear-gradient(135deg, var(--hot-pink) 0%, var(--coral) 50%, var(--gold) 100%);
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .final-slide::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255,45,120,0.85) 0%, rgba(255,111,97,0.85) 50%, rgba(255,215,0,0.85) 100%);
+            z-index: 1;
         }
 
         .final-slide h2 {
@@ -375,6 +388,30 @@
         .butter-emoji {
             font-size: 5rem;
             margin: 30px 0;
+        }
+
+        /* Photo Slides */
+        .photo-slide {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            padding: 20px;
+        }
+
+        .photo-slide::before {
+            display: none;
+        }
+
+        .photo-slide img {
+            max-width: 100%;
+            max-height: 80vh;
+            object-fit: contain;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+        }
+
+        .photo-slide .photo-caption {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            opacity: 0.8;
         }
 
         /* Navigation */
@@ -467,6 +504,10 @@
             .pet-names-grid {
                 grid-template-columns: 1fr;
             }
+
+            .photo-slide img {
+                max-height: 60vh;
+            }
         }
 
         /* Animations */
@@ -508,8 +549,15 @@
             </div>
         </div>
 
-        <!-- Slide 1: Total Messages -->
-        <div class="slide stat-slide slide-hidden" data-slide="1">
+        <!-- Slide 1: Photo - Vegas Kiss -->
+        <div class="slide photo-slide slide-hidden" data-slide="1">
+            <div class="slide-content fade-in">
+                <img src="Photos/IMG_5506.jpg" alt="Steph and Andrew">
+            </div>
+        </div>
+
+        <!-- Slide 2: Total Messages -->
+        <div class="slide stat-slide slide-hidden" data-slide="2">
             <div class="slide-content fade-in">
                 <p class="stat-label">Since July 2022, you've exchanged</p>
                 <p class="stat-number">22,596</p>
@@ -518,8 +566,8 @@
             </div>
         </div>
 
-        <!-- Slide 2: Who Texts More -->
-        <div class="slide stat-slide alt slide-hidden" data-slide="2">
+        <!-- Slide 3: Who Texts More -->
+        <div class="slide stat-slide alt slide-hidden" data-slide="3">
             <div class="slide-content fade-in">
                 <p class="stat-label">Who texts more?</p>
                 <div class="vs-container">
@@ -538,8 +586,8 @@
             </div>
         </div>
 
-        <!-- Slide 3: Response Time -->
-        <div class="slide stat-slide coral slide-hidden" data-slide="3">
+        <!-- Slide 4: Response Time -->
+        <div class="slide stat-slide coral slide-hidden" data-slide="4">
             <div class="slide-content fade-in">
                 <p class="stat-label">Average response time</p>
                 <div class="vs-container">
@@ -558,8 +606,15 @@
             </div>
         </div>
 
-        <!-- Slide 4: Longest Streak -->
-        <div class="slide stat-slide slide-hidden" data-slide="4">
+        <!-- Slide 5: Photo - Sunny Laughing -->
+        <div class="slide photo-slide slide-hidden" data-slide="5">
+            <div class="slide-content fade-in">
+                <img src="Photos/IMG_5340.jpg" alt="Steph and Andrew laughing">
+            </div>
+        </div>
+
+        <!-- Slide 6: Longest Streak -->
+        <div class="slide stat-slide slide-hidden" data-slide="6">
             <div class="slide-content fade-in">
                 <p class="stat-label">Longest texting streak</p>
                 <p class="stat-number">49</p>
@@ -568,8 +623,8 @@
             </div>
         </div>
 
-        <!-- Slide 5: Peak Hour -->
-        <div class="slide stat-slide alt slide-hidden" data-slide="5">
+        <!-- Slide 7: Peak Hour -->
+        <div class="slide stat-slide alt slide-hidden" data-slide="7">
             <div class="slide-content fade-in">
                 <p class="stat-label">Peak texting hour</p>
                 <p class="stat-number">5 PM</p>
@@ -578,8 +633,8 @@
             </div>
         </div>
 
-        <!-- Slide 6: Double Texting -->
-        <div class="slide stat-slide coral slide-hidden" data-slide="6">
+        <!-- Slide 8: Double Texting -->
+        <div class="slide stat-slide coral slide-hidden" data-slide="8">
             <div class="slide-content fade-in">
                 <p class="stat-label">Double & Triple Texting Champion</p>
                 <div class="vs-container">
@@ -598,8 +653,8 @@
             </div>
         </div>
 
-        <!-- Slide 7: Top Emojis -->
-        <div class="slide stat-slide gold slide-hidden" data-slide="7">
+        <!-- Slide 9: Top Emojis -->
+        <div class="slide stat-slide gold slide-hidden" data-slide="9">
             <div class="slide-content fade-in">
                 <p class="stat-label">Your Top Emojis</p>
                 <div style="margin: 30px 0;">
@@ -623,8 +678,8 @@
             </div>
         </div>
 
-        <!-- Slide 8: Pet Names -->
-        <div class="slide stat-slide slide-hidden" data-slide="8">
+        <!-- Slide 10: Pet Names -->
+        <div class="slide stat-slide slide-hidden" data-slide="10">
             <div class="slide-content fade-in">
                 <p class="stat-label">How You Call Each Other</p>
                 <div class="pet-names-grid">
@@ -647,8 +702,16 @@
             </div>
         </div>
 
-        <!-- Slide 9: Spotify Links -->
-        <div class="slide stat-slide alt slide-hidden" data-slide="9">
+        <!-- Slide 11: Photo - ACL -->
+        <div class="slide photo-slide slide-hidden" data-slide="11">
+            <div class="slide-content fade-in">
+                <img src="Photos/IMG_2523.jpg" alt="Steph and Andrew at ACL">
+                <p class="photo-caption">Your shared soundtrack: 400+ songs 🎵</p>
+            </div>
+        </div>
+
+        <!-- Slide 12: Spotify Links -->
+        <div class="slide stat-slide alt slide-hidden" data-slide="12">
             <div class="slide-content fade-in">
                 <p class="stat-label">Spotify links shared</p>
                 <p class="stat-number">400+</p>
@@ -657,8 +720,8 @@
             </div>
         </div>
 
-        <!-- Slide 10: Quirky Patterns -->
-        <div class="slide stat-slide coral slide-hidden" data-slide="10">
+        <!-- Slide 13: Quirky Patterns -->
+        <div class="slide stat-slide coral slide-hidden" data-slide="13">
             <div class="slide-content fade-in">
                 <p class="stat-label">Quirky Patterns</p>
                 <div class="timeline-item">
@@ -676,8 +739,15 @@
             </div>
         </div>
 
-        <!-- Slide 11: Busiest Day -->
-        <div class="slide stat-slide slide-hidden" data-slide="11">
+        <!-- Slide 14: Photo - Silly Faces -->
+        <div class="slide photo-slide slide-hidden" data-slide="14">
+            <div class="slide-content fade-in">
+                <img src="Photos/IMG_2861.jpg" alt="Steph and Andrew being silly">
+            </div>
+        </div>
+
+        <!-- Slide 15: Busiest Day -->
+        <div class="slide stat-slide slide-hidden" data-slide="15">
             <div class="slide-content fade-in">
                 <p class="stat-label">Busiest Texting Day Ever</p>
                 <p class="stat-number smaller">Nov 9, 2025</p>
@@ -686,8 +756,8 @@
             </div>
         </div>
 
-        <!-- Slide 12: Running Milestone -->
-        <div class="slide quote-slide slide-hidden" data-slide="12">
+        <!-- Slide 16: Running Milestone -->
+        <div class="slide quote-slide slide-hidden" data-slide="16">
             <div class="slide-content fade-in">
                 <p class="stat-label">Memorable Moment</p>
                 <div style="font-size: 4rem; margin: 20px 0;">🏃‍♀️</div>
@@ -700,8 +770,8 @@
             </div>
         </div>
 
-        <!-- Slide 13: Roast Time -->
-        <div class="slide roast-slide slide-hidden" data-slide="13">
+        <!-- Slide 17: Roast Time -->
+        <div class="slide roast-slide slide-hidden" data-slide="17">
             <div class="slide-content fade-in">
                 <p class="stat-label">🔥 Roast Corner 🔥</p>
                 <div class="roast-text">
@@ -711,8 +781,8 @@
             </div>
         </div>
 
-        <!-- Slide 14: More Roast -->
-        <div class="slide roast-slide slide-hidden" data-slide="14">
+        <!-- Slide 18: More Roast -->
+        <div class="slide roast-slide slide-hidden" data-slide="18">
             <div class="slide-content fade-in">
                 <p class="stat-label">🔥 Andrew's Signature Move 🔥</p>
                 <div class="roast-text">
@@ -722,8 +792,8 @@
             </div>
         </div>
 
-        <!-- Slide 15: Calendar Alignment -->
-        <div class="slide roast-slide slide-hidden" data-slide="15">
+        <!-- Slide 19: Calendar Alignment -->
+        <div class="slide roast-slide slide-hidden" data-slide="19">
             <div class="slide-content fade-in">
                 <p class="stat-label">🔥 Character Development 🔥</p>
                 <div class="roast-text">
@@ -733,8 +803,15 @@
             </div>
         </div>
 
-        <!-- Slide 16: Romantic Quote -->
-        <div class="slide quote-slide slide-hidden" data-slide="16">
+        <!-- Slide 20: Photo - Park Kiss -->
+        <div class="slide photo-slide slide-hidden" data-slide="20">
+            <div class="slide-content fade-in">
+                <img src="Photos/IMG_1530.jpg" alt="Steph and Andrew kiss">
+            </div>
+        </div>
+
+        <!-- Slide 21: Romantic Quote -->
+        <div class="slide quote-slide slide-hidden" data-slide="21">
             <div class="slide-content fade-in">
                 <p class="stat-label">💕 From Steph to Andrew 💕</p>
                 <div class="quote">
@@ -744,8 +821,8 @@
             </div>
         </div>
 
-        <!-- Slide 17: Andrew Quote -->
-        <div class="slide quote-slide slide-hidden" data-slide="17">
+        <!-- Slide 22: Andrew Quote -->
+        <div class="slide quote-slide slide-hidden" data-slide="22">
             <div class="slide-content fade-in">
                 <p class="stat-label">💕 From Andrew to Steph 💕</p>
                 <div class="quote">
@@ -755,8 +832,15 @@
             </div>
         </div>
 
-        <!-- Slide 18: The Verdict -->
-        <div class="slide roast-slide slide-hidden" data-slide="18">
+        <!-- Slide 23: Photo - Prague -->
+        <div class="slide photo-slide slide-hidden" data-slide="23">
+            <div class="slide-content fade-in">
+                <img src="Photos/IMG_3285.jpg" alt="Steph and Andrew in Prague">
+            </div>
+        </div>
+
+        <!-- Slide 24: The Verdict -->
+        <div class="slide roast-slide slide-hidden" data-slide="24">
             <div class="slide-content fade-in">
                 <p class="stat-label">The Verdict</p>
                 <div class="roast-text" style="border-left-color: var(--pink);">
@@ -766,8 +850,15 @@
             </div>
         </div>
 
-        <!-- Slide 19: Final -->
-        <div class="slide final-slide slide-hidden" data-slide="19">
+        <!-- Slide 25: Photo - Festival Lights -->
+        <div class="slide photo-slide slide-hidden" data-slide="25">
+            <div class="slide-content fade-in">
+                <img src="Photos/IMG_4046.jpg" alt="Steph and Andrew at festival">
+            </div>
+        </div>
+
+        <!-- Slide 26: Final -->
+        <div class="slide final-slide slide-hidden" data-slide="26" style="background-image: url('Photos/K81A9962.jpg');">
             <div class="slide-content fade-in">
                 <h2>It's probably going to last forever.</h2>
                 <div class="butter-emoji">🧈❤️</div>
@@ -785,7 +876,7 @@
 
     <script>
         let currentSlide = 0;
-        const totalSlides = 20;
+        const totalSlides = 27;
         let isAnimating = false;
 
         // Create floating hearts
