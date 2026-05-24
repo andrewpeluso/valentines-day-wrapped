@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Darksnow</title>
+<meta name="description" content="A short story about the world's most feared villain, his cat, and his mother's photo on the desk.">
+<meta property="og:title" content="Darksnow">
+<meta property="og:description" content="The world's most feared villain has a heated floor and a small striped cat named Vincent.">
+<meta property="og:type" content="article">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #07080b;
+    --bg-2: #0c0e13;
+    --ink: #ecebe6;
+    --ink-dim: #9a988f;
+    --ink-faint: #4a4842;
+    --ice: #8ec5ff;
+    --warm: #f3c77a;
+    --rule: #1c1f26;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 21px;
+    line-height: 1.62;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+  }
+
+  ::selection { background: var(--ice); color: var(--bg); }
+
+  /* Grain overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 100;
+    opacity: 0.06;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.85'/></svg>");
+  }
+
+  /* Header */
+  header {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    padding: 18px 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+    z-index: 50;
+    background: linear-gradient(to bottom, rgba(7,8,11,0.85), rgba(7,8,11,0));
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+
+  header .mark { color: var(--ice); }
+  header a { color: inherit; text-decoration: none; }
+  header a:hover { color: var(--ink); }
+
+  /* Hero */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 120px 24px 80px;
+    position: relative;
+    text-align: center;
+  }
+
+  .hero .eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--ice);
+    margin-bottom: 32px;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.2s forwards;
+  }
+
+  .hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500;
+    font-size: clamp(72px, 16vw, 220px);
+    line-height: 0.88;
+    letter-spacing: -0.04em;
+    margin-bottom: 36px;
+    opacity: 0;
+    animation: fadeUp 1s 0.4s forwards;
+  }
+
+  .hero h1 .dark {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--ink);
+  }
+
+  .hero h1 .snow {
+    background: linear-gradient(180deg, #ffffff 0%, #8ec5ff 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .hero .deck {
+    font-style: italic;
+    color: var(--ink-dim);
+    font-size: clamp(18px, 2.4vw, 24px);
+    max-width: 540px;
+    line-height: 1.45;
+    opacity: 0;
+    animation: fadeUp 1s 0.7s forwards;
+  }
+
+  .hero .scroll {
+    position: absolute;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    opacity: 0;
+    animation: fadeUp 1s 1.2s forwards, bob 2.4s 2s infinite;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes bob {
+    0%, 100% { transform: translate(-50%, 0); }
+    50% { transform: translate(-50%, 6px); }
+  }
+
+  /* Falling snow */
+  .snow-field {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .flake {
+    position: absolute;
+    top: -10px;
+    color: var(--ice);
+    opacity: 0;
+    animation: fall linear infinite;
+    font-size: 14px;
+  }
+
+  @keyframes fall {
+    0% { transform: translateY(0) translateX(0); opacity: 0; }
+    10% { opacity: 0.7; }
+    90% { opacity: 0.5; }
+    100% { transform: translateY(110vh) translateX(40px); opacity: 0; }
+  }
+
+  /* Story */
+  .story {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 40px 28px 160px;
+  }
+
+  .story .rule {
+    width: 60px;
+    height: 1px;
+    background: var(--ice);
+    margin: 0 auto 80px;
+    opacity: 0.5;
+  }
+
+  .story p {
+    margin-bottom: 1.4em;
+  }
+
+  .story p:first-of-type::first-letter {
+    font-size: 4.2em;
+    float: left;
+    line-height: 0.85;
+    margin: 0.05em 0.08em 0 -0.04em;
+    color: var(--ice);
+    font-weight: 500;
+  }
+
+  .story p.lead {
+    font-size: 1.1em;
+    color: var(--ink);
+  }
+
+  .story .pull {
+    font-style: italic;
+    font-size: 1.4em;
+    line-height: 1.35;
+    color: var(--ice);
+    padding: 32px 0 32px 28px;
+    margin: 32px 0;
+    border-left: 1px solid var(--ice);
+  }
+
+  .story em { color: var(--warm); font-style: italic; }
+
+  .story .dialogue {
+    color: var(--ink-dim);
+  }
+
+  .story .dialogue strong {
+    font-weight: 500;
+    color: var(--ink);
+    font-style: normal;
+  }
+
+  .story .smallcaps {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7em;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--warm);
+    font-weight: 500;
+  }
+
+  .story .last {
+    font-size: 1.6em;
+    line-height: 1.3;
+    margin-top: 80px;
+    text-align: center;
+    color: var(--ink);
+    font-style: italic;
+    letter-spacing: -0.01em;
+  }
+
+  .story .last .says {
+    display: block;
+    margin-top: 18px;
+    font-size: 0.85em;
+    color: var(--ink-dim);
+    font-style: normal;
+  }
+
+  /* Footer */
+  footer {
+    padding: 60px 28px 80px;
+    text-align: center;
+    border-top: 1px solid var(--rule);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+
+  footer .heart { color: var(--warm); }
+
+  @media (max-width: 640px) {
+    body { font-size: 19px; }
+    header { padding: 14px 18px; font-size: 10px; }
+    .story { padding: 30px 22px 120px; }
+    .story p:first-of-type::first-letter { font-size: 3.6em; }
+    .story .pull { font-size: 1.2em; padding-left: 20px; }
+    .story .last { font-size: 1.3em; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div><span class="mark">●</span> &nbsp;A short story</div>
+  <div><a href="/">andrewstephanie.com</a></div>
+</header>
+
+<section class="hero">
+  <div class="snow-field" id="snow"></div>
+  <div class="eyebrow">A short story · 2026</div>
+  <h1><span class="dark">Dark</span><span class="snow">snow</span></h1>
+  <p class="deck">The world's most feared villain has a heated floor, a small striped cat, and a photo of his mother on the desk.</p>
+  <div class="scroll">↓ &nbsp; Read</div>
+</section>
+
+<article class="story">
+
+  <div class="rule"></div>
+
+  <p class="lead">Darksnow has been trying to take over the world for eleven years. But he keeps stopping to feed stray cats.</p>
+
+  <p>He'll tell you he's a monster. He has the cape, the throne, the seven-foot black helmet shaped like a frostbitten skull. He has a fortress carved into the side of a Norwegian glacier, and a staff of forty-three henchmen, each one chosen for cruelty and bad posture. He has, on his desk, a small framed photo of his mother. But we're not supposed to mention that.</p>
+
+  <p>Last Tuesday, Darksnow announced Plan Glacius. A doomsday device that would freeze every coastline on Earth within six hours. The henchmen cheered. Darksnow did the laugh. Therefore, the device was wheeled out at dawn, aimed across the Atlantic, and powered up.</p>
+
+  <div class="pull">But Darksnow had aimed it at an empty parking lot in New Jersey. On purpose. It was a Sunday and he didn't want to disrupt anyone's commute.</div>
+
+  <p>The henchmen pretended not to notice. They are very good at this now.</p>
+
+  <p class="dialogue"><strong>"Darksnow,"</strong> said Gretchen, his second-in-command, the one with the eye patch and the spreadsheet. <strong>"The world is not freezing."</strong></p>
+
+  <p class="dialogue"><strong>"The world is</strong> <em>partially</em> <strong>freezing,"</strong> Darksnow said.</p>
+
+  <p class="dialogue"><strong>"You froze a Wawa."</strong></p>
+
+  <p class="dialogue"><strong>"And a</strong> <em>Hyundai</em><strong>,"</strong> he said, in the tone of a man defending a thesis.</p>
+
+  <p>There was a long pause. Gretchen took a breath. Therefore: she handed him the resignation letter she had been carrying in her coat for two years.</p>
+
+  <p>But Darksnow had already moved past the moment. He was crouched by the fortress door, scratching the head of a small striped cat who had wandered in through the airlock and was now eating off a plate Darksnow had labeled <span class="smallcaps">My Evil Cat</span>. The cat's name, embroidered on a little black collar, was Vincent.</p>
+
+  <p class="dialogue"><strong>"Vincent doesn't think it's a failure,"</strong> Darksnow said.</p>
+
+  <p>Vincent purred. Vincent has not, to date, ever weighed in on geopolitics.</p>
+
+  <p>This was supposed to be the year. Darksnow had told himself this was the year. He'd written it on a Post-it. The Post-it was on his mirror. The mirror was in a bathroom that, due to a contractor's error, also doubled as a holding cell, which is awkward when you have prisoners.</p>
+
+  <p>But here's the thing nobody puts in the dossier on Darksnow. The fortress has a heated floor. Because the henchmen kept complaining about cold feet. The death traps have safety rails. Because Tomasz fell in once and Darksnow felt terrible for a week. The lair's wifi password is the name of a dog he had as a child. The dog's name was Muffin.</p>
+
+  <p>Therefore, when Interpol finally raided the glacier — and they did, last Thursday, with helicopters and dogs and a man with a bullhorn — they did not find a lair. They found a beautifully ventilated office space with snacks, dental insurance, and a small grey cat eating wet food off a porcelain plate.</p>
+
+  <p>The henchmen had been tipped off. By Darksnow. Who didn't want anyone to get hurt.</p>
+
+  <p>He surrendered on the front steps in slippers. He had taken off the helmet, because it was rude to wear a hat indoors, and the entryway counted as indoors in his opinion. The agent who cuffed him asked, almost apologetically, if he had any last words for the press.</p>
+
+  <p>Darksnow looked at the cameras. He thought about it for a long time.</p>
+
+  <p class="dialogue"><strong>"Tell Vincent,"</strong> he said, <strong>"I'll be home for dinner."</strong></p>
+
+  <p>He won't be. He got eighty years.</p>
+
+  <p>But somewhere in a glacier in Norway, a small striped cat is sitting on a heated floor, eating off a plate that says <span class="smallcaps">My Evil Cat</span>, waiting. And Darksnow, in his cell, is already drafting Plan Glacius II on the back of a napkin. He's pretty sure this time he can pull it off.</p>
+
+  <p class="last">
+    He says that every day.
+    <span class="says">— end —</span>
+  </p>
+
+</article>
+
+<footer>
+  Written with <span class="heart">♥</span> &nbsp;·&nbsp; andrewstephanie.com
+</footer>
+
+<script>
+  // Falling snow
+  (function() {
+    const field = document.getElementById('snow');
+    if (!field) return;
+    const flakes = ['❄', '·', '❅', '✦'];
+    const count = window.innerWidth < 640 ? 18 : 36;
+    for (let i = 0; i < count; i++) {
+      const f = document.createElement('span');
+      f.className = 'flake';
+      f.textContent = flakes[Math.floor(Math.random() * flakes.length)];
+      f.style.left = Math.random() * 100 + '%';
+      f.style.fontSize = (8 + Math.random() * 14) + 'px';
+      f.style.animationDuration = (8 + Math.random() * 14) + 's';
+      f.style.animationDelay = -Math.random() * 14 + 's';
+      f.style.opacity = 0.3 + Math.random() * 0.5;
+      field.appendChild(f);
+    }
+  })();
+</script>
+
+</body>
+</html>
